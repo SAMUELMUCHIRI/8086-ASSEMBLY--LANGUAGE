@@ -1,0 +1,21 @@
+small atm 8086 assembly pseudocode
+
+>start
+>allocate stack
+>diaplay user variables
+
+		Welcome 
+	1: Deposit Cash
+		>Diplay Message "Please Insert the money"
+		press enter key to show money has been deposited
+		update user account balance 
+	2: Withdraw Cash
+		>Display Message "Enter amount to withdraw"
+		>Confirm whether the user input compares with the actual money in the account
+			>if yes subtract the amount from the balance
+			>if no give an error message that its not possible show "Not ENOUGH money in the account"
+
+	3: Check Account Balance
+			>takes the input and compares with the ones in the 
+			>Diplay the user with the amount available 
+			>allocate memory for the back key 
