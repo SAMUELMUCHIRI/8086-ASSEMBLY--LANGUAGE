@@ -11,11 +11,13 @@ With_draw1 DW 13,10,"   WithDraw    $"
 cash  DW 13,10, " You have KSH$"
 message_1  DW "Correct Password $"
 message_2  DW "Incorrect Password Try again $"
-message_3  DW 13,10,"Enter Your Account Name $"     
-message_4  DW 13,10,"    Hello $"
+message_3  DW 13,10,"Enter Your Account Number $"     
+message_4  DW 13,10,"Hello$" 
+user_1Acc  DW 4321H
 user_1 DB "John$"
 pass_1 DW 1234H
-bal_1  DW 100H
+bal_1  DW 100H     
+user_2Acc  DW 9876H
 user_2 DB "Mark$"
 pass_2 DW 4568H
 num_1  DB 01H  
@@ -24,7 +26,8 @@ num_2  DB 02H
 
 
 buffer_sel DB 5,?,2 dup(?)
-buffer_name DB 5,?,5 dup(?)
+buffer_name DB 5,?,5 dup(?) 
+buffer_acc DB 5,?,5 dup(?)
 buffer_pass DB 5,?,5 dup(?)
 buffer_cash DB 13,10,5,?,5 dup(?)
 
@@ -69,76 +72,58 @@ main PROC
     MOV AH ,09H
     INT 21H
     
-    MOV DX,OFFSET buffer_name
+    MOV DX,OFFSET buffer_acc
     MOV AH,0AH
     INT 21H   
     
-    LEA SI, user_1
-    LEA DI, buffer_name
+    MOV AH, buffer_acc         
+    LEA CX, user_1Acc
     
-    MOV CX,4
-    MOV BX,0
+    CMP CH,AH
+    JE L01
+    JNE L02
     
-COMPARE_LOOP:
-    MOV AL,[SI]
-    MOV BL,[DI]
-    
-    CMP AL,BL
-    
-    JNE STRING_NOT_EQUAL 
-    
-    INC SI
-    INC DI
-    INC BX
-    
-    CMP BX, CX
-    JE STRINGS_EQUAL 
-    
-    JMP COMPARE_LOOP
-    
-STRINGS_EQUAL:
-    MOV AH,0AH
-    LEA DX,buffer_pass
-    INT 21H
-    
-    LEA AX, pass_1
-    MOV CH, buffer_pass           
-    CMP AX, CX
-    
-    JE L11  
-    L11: 
-    MOV AH,9
-    MOV DX,message_4
-    INT 21H   
-    
+    L01:
     MOV AH,09H
-    LEA DX,user_1
+    LEA DX, message_4
     INT 21H  
     
     MOV AH,09H
-    MOV DX,cash
+    LEA DX, user_1
+    INT 21H  
+    RET 
+    
+    L02:   
+    MOV AH, buffer_acc     
+    LEA CX, user_2Acc  
+    
+    CMP AH,CH
+    
+    JE R0
+    R0: 
+    MOV AH,09H
+    LEA DX, message_4
+    INT 21H  
+    
+    MOV AH,09H
+    LEA DX, user_2
     INT 21H 
-    
-    MOV AH,09H
-    MOV DX,bal_1
-    INT 21H  
     RET
+    RET
+    
+    
+    
+    
+    
+    
+    
+    
+   
 
-STRING_NOT_EQUAL:
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     RET
+    
+
     
     
    
