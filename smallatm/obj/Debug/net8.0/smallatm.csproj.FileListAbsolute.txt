@@ -1,0 +1,5 @@
+C:\Users\USER\Desktop\site\8086-ASSEMBLY--LANGUAGE\smallatm\obj\Debug\net8.0\smallatm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\site\8086-ASSEMBLY--LANGUAGE\smallatm\obj\Debug\net8.0\smallatm.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\site\8086-ASSEMBLY--LANGUAGE\smallatm\obj\Debug\net8.0\smallatm.AssemblyInfo.cs
+C:\Users\USER\Desktop\site\8086-ASSEMBLY--LANGUAGE\smallatm\obj\Debug\net8.0\smallatm.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\site\8086-ASSEMBLY--LANGUAGE\smallatm\obj\Debug\net8.0\smallatm.sourcelink.json

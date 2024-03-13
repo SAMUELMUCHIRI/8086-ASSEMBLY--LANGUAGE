@@ -19,10 +19,10 @@ len1 equ ($-acc2_pass)
 
 ;messages
 msg1 db 10,13,'Enter your Account Number : $'
-msg2 db 10,13,'Account found$'
+msg2 db 10,13,'     Account found$'
 msg3 db 10,13,'Incorrect Password, Please try again!$'
 msg4 db 10,13 , 'Account number Not Found$' 
-msg5  DW  " Enter Your Password $" 
+msg5  DW 10,13,  " Enter Your Password $" 
 msg6  DW 13,10, "Incorrect Password Try again $" 
 msg7  DW 13,10, "Enter Account Number OF Receiver $" 
 currentbal_msg DW 13,10," The Balance is Ksh $"
@@ -38,7 +38,8 @@ With_draw1 DW 13,10,"   WithDraw    $"
 cash  DW 13,10, " You have KSH$"
 invalid DW 13,10, "invalid entry try again$"
 dev DW 13,10, "Amount be greater than 1000 Press one to enter amount$"  
-exit DW 13,10, " 5 Exit$"  
+exit DW 13,10, " 5 Exit$"   
+exit1 DW 13,10, "  $"
 MAX_LIM DW 5000   
 LIM_EXCEED DB 0AH, 0AH, 0DH, " Limit exceeded (Maximum amount = Ksh. 5000)$"
 BAL_LOW DB 0AH, 0AH, 0DH, " Insufficient balance$"
@@ -71,6 +72,8 @@ mov ax,@data
 mov ds,ax  
 
 nxt:
+mov ax, 3
+int 10h
 lea dx,msg1   ; calculates the effective address of a memory operand and stores it in a register, without actually accessing the memory.
 mov ah,09h
 int 21h
@@ -78,14 +81,11 @@ mov si,00
 
 
 up1:
-mov ah,08h
+mov ah,01h
 int 21h
 cmp al,0dh
 je down
 mov [inst+si],al
-mov dl,'*'
-mov ah,02h
-int 21h
 inc si
 jmp up1
 
@@ -178,6 +178,8 @@ turn2:
 jmp accservices2 
 
 accservices2: 
+mov ax, 3
+int 10h
 mov dx,offset welcome 
 mov ah,09h   
 int  21h
@@ -194,6 +196,9 @@ mov dx,offset T_msg
 mov ah,09h
 int 21h
 mov dx,offset exit   
+mov ah,09h
+int 21h 
+mov dx,offset exit1   
 mov ah,09h
 int 21h
 mov ah,01h
@@ -224,7 +229,8 @@ CheckBal2:
    XOR AX, AX
    MOV AX, balance2
    CALL DISPLAY_NUM
-             
+   mov ah, 1
+   int 21h             
    JMP accservices2
    
 
@@ -491,6 +497,8 @@ inc bx
 loop acccheck
 
 accservices: 
+mov ax, 3
+int 10h
 mov dx,offset welcome 
 mov ah,09h   
 int  21h
@@ -507,6 +515,9 @@ mov dx,offset T_msg
 mov ah,09h
 int 21h
 mov dx,offset exit   
+mov ah,09h
+int 21h
+mov dx,offset exit1   
 mov ah,09h
 int 21h
 mov ah,01h
@@ -536,7 +547,9 @@ CheckBal:
                        
    XOR AX, AX
    MOV AX, balance
-   CALL DISPLAY_NUM
+   CALL DISPLAY_NUM 
+   mov ah, 1
+   int 21h
              
    JMP accservices
 
@@ -597,6 +610,8 @@ WITH_TRANSACT: CMP BX, balance
                MOV AH, 0H
                INT 16H
                CALL SUCCESS_MSG
+               mov ah, 1
+               int 21h
                JMP accservices    
 
     ;Deposit money to account
@@ -759,6 +774,8 @@ SEND_TRANSACT:CMP BX, balance
               MOV AH, 0H
               INT 16H
               CALL SUCCESS_MSG
+              mov ah, 1
+              int 21h
               JMP accservices
                                                          
 EXCEED2_ERROR: MOV AH, 0H
